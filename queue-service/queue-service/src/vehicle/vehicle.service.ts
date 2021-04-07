@@ -48,18 +48,18 @@ export class VehicleService {
                 console.log("- ** - "+data);
                 vehicleDetail.push(data)
              //Vehicle Object
-                const  v=new Vehicle();
-                v.id=data[0];
-                v.first_name=data[1];
-                v.last_name=data[2];
-                v.email=data[3];
-                v.car_make=data[4];
-                v.car_model=data[5];
-                v.vin_number=data[6];
-                v.manufactured_date=data[7];
+                const  vehicleData=new Vehicle();
+                vehicleData.id=data[0];
+                vehicleData.first_name=data[1];
+                vehicleData.last_name=data[2];
+                vehicleData.email=data[3];
+                vehicleData.car_make=data[4];
+                vehicleData.car_model=data[5];
+                vehicleData.vin_number=data[6];
+                vehicleData.manufactured_date=data[7];
                 
                 getConnection().createQueryBuilder().insert().into(Vehicle)
-               .values(v).execute().finally(()=>console.log("Finished"));
+               .values(vehicleData).execute().finally(()=>console.log("Finished"));
                 
             } )
             .on('end',async ()=>{
