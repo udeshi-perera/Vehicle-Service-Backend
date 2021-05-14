@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { VehicleModule } from './vehicle/vehicle.module';
 import { BullModule} from '@nestjs/bull'
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppGateway } from './app.gateway';
 
 @Module({
   imports: [VehicleModule,
@@ -16,6 +17,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TypeOrmModule.forRoot(),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,AppGateway],
 })
 export class AppModule {}

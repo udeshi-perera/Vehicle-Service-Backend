@@ -41,10 +41,15 @@ export class VehicleService {
         //         .values(vehicleDetail).execute().finally(()=>console.log("Finished"));
         //     });
 
+        
+
 
             fs.createReadStream(job.path)
             .pipe(csv.parse({}))
             .on('data',data =>{
+                const currentDate: Date = new Date(); 
+                const manuDate: Date = new Date("1985-12-11T18:30:00.000Z");
+
                 console.log("- ** - "+data);
                 vehicleDetail.push(data)
              //Vehicle Object
@@ -57,7 +62,7 @@ export class VehicleService {
                 vehicleData.car_model=data[5];
                 vehicleData.vin_number=data[6];
                 vehicleData.manufactured_date=data[7];
-                
+                vehicleData.age_of_vehicle=currentDate.getDate()-manuDate.getDate();
                 getConnection().createQueryBuilder().insert().into(Vehicle)
                .values(vehicleData).execute().finally(()=>console.log("Finished"));
                 

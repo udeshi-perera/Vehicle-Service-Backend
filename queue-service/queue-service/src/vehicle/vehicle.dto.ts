@@ -12,4 +12,6 @@ export interface VehicleDTO{
     vin_number:string;
 
     manufactured_date:Date
+
+    age_of_vehicle: number;
 }

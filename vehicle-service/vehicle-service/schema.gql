@@ -11,6 +11,7 @@ type Vehicle {
   carModel: String!
   vinNumber: String!
   manufacturedDate: String!
+  ageOfVehicle: Float!
 }
 
 type Query {

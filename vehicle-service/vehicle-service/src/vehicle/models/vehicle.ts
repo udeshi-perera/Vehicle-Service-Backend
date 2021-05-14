@@ -25,4 +25,7 @@ export class Vehicle {
 
     @Field()
     manufacturedDate: string;
+
+    @Field()
+    ageOfVehicle: number;
   }

@@ -25,4 +25,7 @@ export class Vehicle {
 
   @CreateDateColumn()
   manufactured_date:Date
+
+  @Column()
+  age_of_vehicle: number;
 }
