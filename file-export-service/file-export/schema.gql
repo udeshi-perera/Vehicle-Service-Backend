@@ -1,0 +1,19 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Vehicle {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  carMake: String!
+  carModel: String!
+  vinNumber: String!
+  manufacturedDate: String!
+  ageOfVehicle: Float!
+}
+
+type Query {
+  vehicleByAge(ageOfVehicle: Int!): [Vehicle!]
+}
