@@ -19,17 +19,17 @@ let agServer = socketClusterServer.attach(httpServer, options);
       //give any channel name as u like
       for await (let data of socket.receiver("channelName")) {
         //view data from
-        console.log(data);
+        console.log(data+"From client");
 
         //send notifications to client repeatedly
         try {
           // Publish data; wait for an acknowledgement from the back end broker (if it exists).
-          setInterval(() => {
+          // setInterval(() => {
             agServer.exchange.transmitPublish(
               "channelName",
               "This is some data sended from server " + Math.random()
             );
-          }, 700000);
+          // }, 70000000);
         } catch (error) {
           // ... Handle potential error if broker does not acknowledge before timeout.
         }

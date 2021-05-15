@@ -4,9 +4,12 @@ import { Vehicle } from './models/vehicle';
 import { request, gql } from 'graphql-request'
 import * as fs from 'fs';
 import * as csv from 'fast-csv';
+import { VehicleService } from './vehicle.service';
 
 @Resolver(()=>Vehicle)
 export class FileExportResolver {
+
+  constructor(private vehicleService:VehicleService){}
 
 @Query(() => [Vehicle], { nullable: true })
 async vehicleByAge(@Args() getAge:GetVehicleArgs){
@@ -38,6 +41,15 @@ for (i = 0; i < ageData.allVehicles.nodes.length; i++) {
   ],{headers:true}).pipe(ws)
   console.log(text);
 }
+
+//await this.vehicleService.sendMessage();
+//await this.appController.getHello();
+
+
+
+
+
+
     return ageData.allVehicles.nodes;
 }
 

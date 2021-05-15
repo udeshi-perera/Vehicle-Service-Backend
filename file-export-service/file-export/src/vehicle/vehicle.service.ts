@@ -2,42 +2,97 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 
 @Injectable()
 
-export class VehicleService implements OnModuleInit{
+export class VehicleService{
 
 
-    constructor(){
-      // socketcuster-server
+//     constructor(){
+//       // socketcuster-server
+// //this is a simple example socketcluster
+// const http = require("http");
+// const socketClusterServer = require("socketcluster-server");
+
+// let options = {
+//   // ...
+// };
+
+// let httpServer = http.createServer();
+// let agServer = socketClusterServer.attach(httpServer, options);
+// // --- in server.js ---
+
+// // SocketCluster/WebSocket connection handling loop.
+// (async () => {
+//   for await (let { socket } of agServer.listener("connection")) {
+//     (async () => {
+//       // Set up a loop to handle remote transmitted events.
+//       //give any channel name as u like
+//       for await (let data of socket.receiver("channelName")) {
+//         //view data from
+//         console.log(data);
+
+//         //send notifications to client repeatedly
+//         try {
+//           // Publish data; wait for an acknowledgement from the back end broker (if it exists).
+//           setInterval(() => {
+//             agServer.exchange.transmitPublish(
+//               "channelName",
+//               "This is some data sended from server " + Math.random()
+//             );
+//           }, 10000);
+//         } catch (error) {
+//           // ... Handle potential error if broker does not acknowledge before timeout.
+//         }
+//       }
+//     })();
+//   }
+// })();
+
+// // port 8000
+// //httpServer.listen(8000);
+
+//     }
+    
+    
+//     onModuleInit() {
+  
+        
+//     }
+    // socketcuster-server
 //this is a simple example socketcluster
-const http = require("http");
-const socketClusterServer = require("socketcluster-server");
+ http = require("http");
+ socketClusterServer = require("socketcluster-server");
 
-let options = {
+ options = {
   // ...
 };
 
-let httpServer = http.createServer();
-let agServer = socketClusterServer.attach(httpServer, options);
+ httpServer = this.http.createServer();
+ agServer = this.socketClusterServer.attach(this.httpServer, this.options);
+   
+ 
+ 
+ constructor(){
+  
 // --- in server.js ---
 
 // SocketCluster/WebSocket connection handling loop.
 (async () => {
-  for await (let { socket } of agServer.listener("connection")) {
+  for await (let { socket } of this.agServer.listener("connection")) {
     (async () => {
       // Set up a loop to handle remote transmitted events.
       //give any channel name as u like
       for await (let data of socket.receiver("channelName")) {
         //view data from
-        console.log(data);
+        console.log(data+"From client");
 
         //send notifications to client repeatedly
         try {
           // Publish data; wait for an acknowledgement from the back end broker (if it exists).
-          setInterval(() => {
-            agServer.exchange.transmitPublish(
+          // setInterval(() => {
+            this.agServer.exchange.transmitPublish(
               "channelName",
               "This is some data sended from server " + Math.random()
             );
-          }, 10000);
+          // }, 70000000);
         } catch (error) {
           // ... Handle potential error if broker does not acknowledge before timeout.
         }
@@ -46,18 +101,19 @@ let agServer = socketClusterServer.attach(httpServer, options);
   }
 })();
 
+ 
+
 // port 8000
-//httpServer.listen(8000);
+this.httpServer.listen(8000);
 
     }
-    
-    
-    onModuleInit() {
-  
-        
+    async  sendMessage() {
+      console.log("messages Sended to client");
+     await this.agServer.exchange.transmitPublish(
+        "channelName",
+        "This is some data sended from server " + Math.random()
+      );
     }
-
-    
     
     
 }

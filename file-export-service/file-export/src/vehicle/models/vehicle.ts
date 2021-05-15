@@ -26,6 +26,6 @@ export class Vehicle {
     @Field()
     manufacturedDate: string;
 
-    @Field()
+    @Field(()=>Int)
     ageOfVehicle: number;
   }
