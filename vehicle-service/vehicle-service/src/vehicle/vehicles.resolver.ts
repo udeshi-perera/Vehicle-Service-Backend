@@ -90,13 +90,13 @@ async updateVehicle(@Args('updateVehicleData')updateVehicleData:UpdateUserInput)
   mutation {
     updateVehicleById(
       input: {vehiclePatch:
-        {carMake: ${updateVehicleData.carMake},
-        carModel: ${updateVehicleData.carModel}, 
-        firstName: ${updateVehicleData.firstName},
-        email: ${updateVehicleData.email},
-        lastName: ${updateVehicleData.lastName}, 
-        manufacturedDate: ${updateVehicleData.manufacturedDate},
-        vinNumber: ${updateVehicleData.vinNumber}},
+        {carMake:" ${updateVehicleData.carMake}",
+        carModel: "${updateVehicleData.carModel}", 
+        firstName: "${updateVehicleData.firstName}",
+        email: "${updateVehicleData.email}",
+        lastName: "${updateVehicleData.lastName}", 
+        manufacturedDate: "${updateVehicleData.manufacturedDate}",
+        vinNumber: "${updateVehicleData.vinNumber}"},
         id: ${updateVehicleData.id}}
     ) {
       vehicle {
@@ -111,8 +111,9 @@ async updateVehicle(@Args('updateVehicleData')updateVehicleData:UpdateUserInput)
     }
   }
   `;
-
+// console.log(updateQuery);
   const updatedData=await request('http://localhost:5000/graphql',updateQuery)
-  console.log(updatedData);
+  console.log(updatedData.updateVehicleById.vehicle);
+  return updatedData.updateVehicleById.vehicle;
 }
 }
