@@ -2,6 +2,8 @@ import { HttpService, Injectable, Post } from '@nestjs/common';
 import { GetVehicleArgs } from './dto/args/get-vehicle.args';
 import { Vehicle } from './models/vehicle';
 import { request, gql } from 'graphql-request'
+import { PaginateArgs } from './dto/args/paginate.args';
+import { PaginateVehicle } from './models/paginate-vehicle';
 
 
 @Injectable()
@@ -32,4 +34,9 @@ export class VehicleService {
 //     return ;
 
 //      } 
+
+
+// public getAllVehicles(paginate: PaginateArgs): Promise<PaginateVehicle> {
+//     return this.readerApi.getAllVehicles(paginate);
+// }
 }

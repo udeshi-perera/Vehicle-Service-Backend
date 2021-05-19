@@ -6,6 +6,7 @@ import { request, gql } from 'graphql-request'
 import { GetVehiclesArgs } from "./dto/args/get-vehicles.args";
 import { DeleteUserInput } from "./dto/input/delete-user-input";
 import { UpdateUserInput } from "./dto/input/update-user-input";
+import { PaginateVehicle } from "./models/paginate-vehicle";
 
 @Resolver(()=>Vehicle)
 export class VehiclesResolver {
@@ -44,28 +45,67 @@ console.log(dataDetail.vehicleById);
 return dataDetail.vehicleById;
 }
 
-@Query(() => [Vehicle], { nullable: true })
-async getVehicles (){
-
-  const query1=gql`
-  query  {
-    allVehicles {
-        nodes {
-          id
-          firstName
-          email
-          carModel
-          carMake
-          lastName
-          manufacturedDate
-          vinNumber
-        }
+@Query(()=>[Vehicle],{nullable:true})
+async searchVehicles(@Args('model')model:string){
+  const query=gql`
+  query{
+    allVehicles(filter: {carModel: {startsWith: "${model}"}}) {
+      nodes {
+        ageOfVehicle
+        carMake
+        carModel
+        email
+        firstName
+        id
+        lastName
+        manufacturedDate
+        nodeId
+        vinNumber
       }
+    }
   }
+  `
+  const dataDetail= await request('http://localhost:5000/graphql',query)
+console.log(dataDetail.allVehicles.nodes);
+return dataDetail.allVehicles.nodes;
+}
+
+@Query(() => PaginateVehicle, { nullable: true })
+async getVehicles (@Args('page')page:number=1){
+
+  var offset:number;
+  if(page==1){
+    offset=0*100;
+  }else{
+    offset=page*100;
+  }
+  const query1=gql`
+  query{
+    allVehicles(offset: ${offset}, first: 100) {
+      nodes {
+        ageOfVehicle
+        carMake
+        carModel
+        email
+        firstName
+        id
+        lastName
+        manufacturedDate
+        nodeId
+        vinNumber
+      }
+      totalCount
+    }
+  }
+  
 `;
 const dataDetail= await request('http://localhost:5000/graphql',query1)
 console.log(dataDetail.allVehicles);
-return dataDetail.allVehicles.nodes;
+const res:PaginateVehicle={
+  vehicles:dataDetail.allVehicles.nodes,
+  totalCount:dataDetail.allVehicles.totalCount
+}
+return res;
 }
 
 @Mutation(()=>Vehicle)
@@ -116,4 +156,6 @@ async updateVehicle(@Args('updateVehicleData')updateVehicleData:UpdateUserInput)
   console.log(updatedData.updateVehicleById.vehicle);
   return updatedData.updateVehicleById.vehicle;
 }
+
+
 }

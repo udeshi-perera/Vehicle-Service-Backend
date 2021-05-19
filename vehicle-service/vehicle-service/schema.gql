@@ -14,10 +14,16 @@ type Vehicle {
   ageOfVehicle: Float!
 }
 
+type PaginateVehicle {
+  totalCount: Int!
+  vehicles: [Vehicle!]!
+}
+
 type Query {
   hello: String!
   vehicleById(id: Int!): Vehicle
-  getVehicles: [Vehicle!]
+  searchVehicles(model: String!): [Vehicle!]
+  getVehicles(page: Float!): PaginateVehicle
 }
 
 type Mutation {

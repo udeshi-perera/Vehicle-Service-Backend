@@ -48,6 +48,7 @@ export class VehicleService {
             .pipe(csv.parse({}))
             .on('data',data =>{
                 const currentDate: Date = new Date(); 
+                const manuDate: Date = new Date("1985-12-11T18:30:00.000Z");
 
                 console.log("- ** - "+data);
                 vehicleDetail.push(data)
